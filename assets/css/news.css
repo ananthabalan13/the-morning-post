@@ -1,0 +1,91 @@
+.bodySection {
+    width: 100%;
+    height: 700px;
+    display: flex;
+    column-gap: 2.5%;
+    padding: 30px;
+    background-color: rgba(211, 211, 211, 0.2);
+  }
+  .bodySection .mainContentWrapper {
+    width: 67.5%;
+    height: 100%;
+    background-color: white;
+    box-shadow: var(--primary-Boxshadow);
+    border-radius: 20px;
+  }
+  .bodySection .mainContentWrapper .image {
+    width: 100%;
+    height: 50%;
+    background-color: #333;
+  }
+  .bodySection .mainContentWrapper .textContent {
+    padding: 20px;
+  }
+  .bodySection .mainContentWrapper .textContent h2 {
+    margin-bottom: 20px;
+  }
+  .bodySection .mainContentWrapper .textContent p {
+    color: #333333dc;
+  }
+  .bodySection .relatedPostContainer {
+    /* flex-grow: 1; */
+    width: 30%;
+    background-color: white;
+    box-shadow: var(--primary-Boxshadow);
+    border-radius: 20px;
+    padding: 12px 20px;
+    overflow-y: auto;
+  }
+  .bodySection .relatedPostContainer .headingText {
+    border-bottom: 1px solid #3333334b;
+    padding-bottom: 10px;
+  }
+  .bodySection .relatedPostContainer .newsWrapper {
+    padding: 20px 0;
+    overflow-y: auto;
+  }
+  .bodySection .relatedPostContainer .newsCard {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border-bottom: 1px solid #3b393940;
+    padding: 20px;
+    cursor: pointer;
+    position: relative;
+  }
+  .bodySection .relatedPostContainer .newsCard:hover {
+    background-color: rgba(211, 211, 211, 0.626);
+  }
+  .relatedPostContainer .newsCard .img {
+    width: 80px;
+    height: 80px;
+    background-color: #333;
+  }
+  .relatedPostContainer .newsCard .details {
+    width: 75%;
+  }
+  .relatedPostContainer .newsCard .details h3 {
+    font-size: 14px;
+    margin-bottom: 6px;
+    line-clamp: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .relatedPostContainer .newsCard .details p {
+    font-size: 11px;
+    color: rgba(49, 47, 47, 0.686);
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .relatedPostContainer .newsCard .date{
+    font-size: 9px;
+    white-space: nowrap;
+    position: absolute;
+    bottom: 3px;
+    right: 10px;
+  }
