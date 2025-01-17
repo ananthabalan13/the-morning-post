@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Section</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/payment.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/payment.css" />
+  </head>
+  <body>
+    <div class="payment-form">
+      <h2>The Morning Post</h2>
+      <p>
+        Secure your subscription and start mastering the stock market today!
+      </p>
+
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <input
+        type="number"
+        id="phone"
+        placeholder="Your Phone Number"
+        required
+      />
+      <input
+        type="number"
+        id="amount"
+        placeholder="Amount (INR)"
+        disabled
+        required
+      />
+      <h3>Payment Details</h3>
+      <div class="paymentDetails">
+        <div class="box active" id="creditCard">
+          <img src="assets/images/credit-card-regular.svg" alt="Credit card" />
+          <span>Credit Card</span>
+        </div>
+        <div class="box" id="bankTransfer">
+          <img src="assets/images/building-columns-solid.svg" alt="bank" />
+          <span>Bank Transfer</span>
+        </div>
+        <div class="box" id="upi">
+          <img src="assets/images/paypal-brands-solid.svg" alt="UPI" />
+          <span>UPI</span>
+        </div>
+      </div>
+      <div class="detail">
+        <div class="creditCardDetails details active">
+          <input type="number" placeholder="Credit Card Number" />
+          <input type="text" placeholder="MM/YY" maxlength="5" />
+          <input type="text" placeholder="CVV" maxlength="3" />
+        </div>
+        <div class="bankTransferDetails details">
+          <input type="text" placeholder="Bank account number" />
+          <input type="text" placeholder="IFSC Code" />
+        </div>
+        <div class="upiDetails details">
+          <input type="text" placeholder="UPI Id or number" />
+        </div>
+      </div>
+
+      <button id="pay-now">Pay Now</button>
+    </div>
+
+    <script src="assets/js/payment.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  </body>
+</html>
