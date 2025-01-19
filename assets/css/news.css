@@ -6,6 +6,20 @@
     padding: 30px;
     background-color: rgba(211, 211, 211, 0.2);
   }
+  /* width */
+.customScroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.customScroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.customScroll::-webkit-scrollbar-thumb {
+  background: #8888889b;
+}
   .bodySection .mainContentWrapper {
     width: 65%;
     height: 100%;
