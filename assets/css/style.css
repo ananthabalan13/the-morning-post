@@ -11,20 +11,6 @@ body {
   position: relative;
   font-family: "Poppins", serif;
 }
-/* width */
-.customScroll::-webkit-scrollbar {
-  width: 5px;
-}
-
-/* Track */
-.customScroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-.customScroll::-webkit-scrollbar-thumb {
-  background: #8888889b;
-}
 .header {
   width: 100%;
   height: 50px;
