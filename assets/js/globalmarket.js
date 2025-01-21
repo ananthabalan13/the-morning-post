@@ -245,13 +245,6 @@ stockData.forEach((stock) =>{
 const stocks = document.querySelectorAll(".stocks")
 console.log(stocks);
 
-
-// const stockName =document.querySelector(".stockName")
-// const companyName =document.querySelector(".companyName")
-// const stockPrice =document.querySelector(".stockPrice")
-// const volume =document.querySelector(".volume")
-// const dayLow =document.querySelector(".dayLow")
-// const dayHigh =document.querySelector(".dayHigh")
 const body = document.querySelector(".tableBody")
 
 stocks.forEach((stock,i)=>{
@@ -287,3 +280,22 @@ else{
   }
   })
 })
+
+stocks.forEach((stock) => {
+  stock.addEventListener("click",()=>{
+    const id = stock.getAttribute("data-id")
+    const data = stockData.find((obj) => obj.id == id);
+    const symbol =data.symbol
+    showGraph(symbol) 
+  })
+})
+
+async function showGraph(symbol){
+  const apikey="CTHM6KRGP3QSVY85"
+  const url =`"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${apikey}"`
+  await fetch(url)
+  .then(res => res.json())
+  .then(monthlyData => console.log(monthlyData))
+}
+
+
