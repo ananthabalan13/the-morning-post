@@ -50,6 +50,10 @@
     column-gap: 50px;
     color: #161616c4;
   }
+  .rightHeading .active{
+    color: black;
+    font-weight: 800;
+  }
   .bodySection .mainContentWrapper .heading .rightHeading h5:hover{
     color: black;
   }
@@ -60,13 +64,14 @@
   }
   table thead tr{
     display: flex;
-    justify-content: flex-start;
     width: 100%;
     height: 40px; 
     border-bottom: 1px solid #3b393940;
+    align-items: center;
+    justify-content: center;
   }
 table th{
-    width: calc(100% / 6);
+    width: calc(100% / 5);
     align-items: center;
     text-align: center;
   }
@@ -74,6 +79,7 @@ table th{
     max-height: 205px;
     overflow-y: scroll;
     cursor: pointer;
+    flex-direction: column;
   }
 table tbody tr {
     display: flex;
@@ -84,11 +90,11 @@ table tbody tr {
     min-height: 50px;
     max-height: auto;
   }
-  table tbody tr:first-child{
-    background-color:#3b393940 ;
+  table tbody tr:nth-child(even){
+    background-color:#3b393923 ;
   }
 table tbody tr td{
-    width:calc(100% / 6);
+    width:calc(100% / 5);
     display: flex;
     align-items: center;
     text-align: center;
@@ -140,75 +146,6 @@ table tbody tr td{
     border-bottom: 1px solid #3333334b;
     padding-bottom: 10px;
   }
-/*   .bodySection .relatedPostContainer .headingText input{
-    width: 300px;
-    background-color: transparent;
-    border: 1px solid #333;
-    border-radius: 3px;
-    height: 30px;
-    padding: 5px;
-    font-size: 16px;
-  }
-  input[type="search"]::-webkit-search-cancel-button { 
-  height: 16px;
-  width: 16px;
-  color: black;  
-  background-size: contain;
-  cursor: pointer;
-}
-
-input[type="search"] {
-  padding-right: 30px; /* Adjust for space for the × icon} */
-
-  .bodySection .relatedPostContainer .newsWrapper {
-    padding: 20px 0;
-    overflow-y: auto;
-  }
-  .bodySection .relatedPostContainer .newsCard {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    border-bottom: 1px solid #3b393940;
-    padding: 20px;
-    cursor: pointer;
-    position: relative;
-  }
-  .bodySection .relatedPostContainer .newsCard:hover {
-    background-color: rgba(211, 211, 211, 0.626);
-  }
-  .relatedPostContainer .newsCard .img {
-    width: 80px;
-    height: 80px;
-    background-color: #333;
-  }
-  .relatedPostContainer .newsCard .details {
-    width: 75%;
-  }
-  .relatedPostContainer .newsCard .details h3 {
-    font-size: 14px;
-    margin-bottom: 6px;
-    line-clamp: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .relatedPostContainer .newsCard .details p {
-    font-size: 11px;
-    color: rgba(49, 47, 47, 0.686);
-    display: -webkit-box;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .relatedPostContainer .newsCard .date{
-    font-size: 9px;
-    white-space: nowrap;
-    position: absolute;
-    bottom: 3px;
-    right: 10px;
-  }
 .stocks{
     display: flex;
     align-items: center;
@@ -220,6 +157,11 @@ input[type="search"] {
     background-color: rgba(211, 211, 211, 0.626);
 }
 .stocks .stock-details p{
-    color: green;
+    color: rgb(25, 199, 13);
     text-align: right;
+}
+.chart{
+  width: 80%;
+  height: 50%;
+  border: 1px solid #000;
 }

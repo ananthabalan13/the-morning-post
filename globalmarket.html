@@ -23,13 +23,13 @@
     <main class="bodySection">
       <div class="mainContentWrapper">
         <div class="chart">
-          
+        
         </div>
         <div class="overViewDetails">
           <div class="heading">
             <h2 class="overView">Overview</h2>
             <div class="rightHeading">
-              <h5>Actives</h5>
+              <h5 class="active">Most Actively</h5>
               <h5>Gainers</h5>
               <h5>Losers</h5>
             </div>
@@ -40,14 +40,19 @@
               <thead>
                 <tr>
                   <th>Stock</th>
-                  <th>Company Name</th>
                   <th>Stock Price</th>
+                  <th>Change Amount</th>
                   <th>Volume</th>
-                  <th>Day Low</th>
-                  <th>Day High</th>
+                  <th>Change Percentage</th>          
                 </tr>
               </thead>
-              <tbody class="tableBody customScroll">
+              <tbody class="tableBody customScroll" id="activeStocks">
+
+              </tbody>
+              <tbody class="tableBody customScroll" id="topGainers">
+
+              </tbody>
+              <tbody class="tableBody customScroll" id="topLosers">
 
               </tbody>
             </table>
@@ -64,8 +69,35 @@
         <div class="stockDetails"></div>
       </div>
     </main>
-    <footer class="footer"></footer>
-    
+    <footer class="footer">
+      <div class="footerContainer">
+          <div class="footertHeader">
+              <h1>The Morning Post</h1>
+              <p>The Morning Post delivers daily stock market insights ,expert analysis ,and investment strategies to empower your financial journey. Stay informed and make confident decisions with our trusted updates </p>
+          </div>
+          <div class="footerContent">
+              <div class="address">
+                  <h3>Contact Us</h3>
+                  <div class="div">
+                      <b>Email Address :</b><p>themorningpostpremarket@gmail.com</p>
+                  </div>
+                  <div class="div">
+                      <b>Phone No:</b><p>+91-9360976118, +91-9360735045</p>
+                  </div>
+                  <div class="div">
+                      <b>Address:</b><p>The Morning Post,10/25c,East Puliyampatti,Kamarajar Nagar,Elampillai,Salem,Tamil Nadu - 637502</p>
+                  </div>
+                  
+              </div>
+              <div class="usefulLinks">
+                  <h3>Quick Links</h3>
+                  <a href="news.html">News/Articles</a>
+                  <a href="globalmarket.html">Globalmarket</a>
+                  <a href="subscription.html">Subscription</a>
+              </div>
+          </div>
+      </div>
+  </footer>
 
     <script src="assets/js/script.js"></script>
     <script src="assets/js/globalmarket.js"></script>
