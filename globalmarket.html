@@ -22,9 +22,21 @@
     </header>
     <main class="bodySection">
       <div class="mainContentWrapper">
-        <div class="chart">
-        
+
+        <div class="chartDiv">
+
+          <canvas class="chart"></canvas>
+          
+          <div class="dataVisibleDiv">
+            <div class="dataVisible">1D</div>
+            <div class="dataVisible">1W</div>
+            <div class="dataVisible">1M</div>
+            <div class="dataVisible">1Y</div>
+          </div>
+
         </div>
+        
+        
         <div class="overViewDetails">
           <div class="heading">
             <h2 class="overView">Overview</h2>
@@ -98,7 +110,7 @@
           </div>
       </div>
   </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
     <script src="assets/js/script.js"></script>
     <script src="assets/js/globalmarket.js"></script>
   </body>

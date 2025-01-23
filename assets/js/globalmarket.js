@@ -657,22 +657,169 @@ const topGainersLosersDtata = {
   ],
 };
 
-const rightHeading=document.querySelector(".rightHeading")
+const monthlyData = {
+  "Meta Data": {
+    "1. Information": "Monthly Prices (open, high, low, close) and Volumes",
+    "2. Symbol": "AAPL",
+    "3. Last Refreshed": "2025-01-22",
+    "4. Time Zone": "US/Eastern",
+  },
+  "Monthly Time Series": {
+    "2024-12-31": {
+      "1. open": "237.2700",
+      "2. high": "260.1000",
+      "3. low": "237.1600",
+      "4. close": "250.4200",
+      "5. volume": "977942014",
+    },
+    "2024-11-29": {
+      "1. open": "220.9650",
+      "2. high": "237.8100",
+      "3. low": "219.7100",
+      "4. close": "237.3300",
+      "5. volume": "891640714",
+    },
+    "2024-10-31": {
+      "1. open": "229.5200",
+      "2. high": "237.4900",
+      "3. low": "221.3300",
+      "4. close": "225.9100",
+      "5. volume": "930835961",
+    },
+    "2024-09-30": {
+      "1. open": "228.5500",
+      "2. high": "233.0900",
+      "3. low": "213.9200",
+      "4. close": "233.0000",
+      "5. volume": "1231814423",
+    },
+    "2024-08-30": {
+      "1. open": "224.3700",
+      "2. high": "232.9200",
+      "3. low": "196.0000",
+      "4. close": "229.0000",
+      "5. volume": "1122666993",
+    },
+    "2024-07-31": {
+      "1. open": "212.0900",
+      "2. high": "237.2300",
+      "3. low": "211.9200",
+      "4. close": "222.0800",
+      "5. volume": "1153193377",
+    },
+    "2024-06-28": {
+      "1. open": "192.9000",
+      "2. high": "220.2000",
+      "3. low": "192.1500",
+      "4. close": "210.6200",
+      "5. volume": "1723984420",
+    },
+    "2024-05-31": {
+      "1. open": "169.5800",
+      "2. high": "193.0000",
+      "3. low": "169.1100",
+      "4. close": "192.2500",
+      "5. volume": "1336570142",
+    },
+    "2024-04-30": {
+      "1. open": "171.1900",
+      "2. high": "178.3600",
+      "3. low": "164.0750",
+      "4. close": "170.3300",
+      "5. volume": "1240410671",
+    },
+    "2024-03-28": {
+      "1. open": "179.5500",
+      "2. high": "180.5300",
+      "3. low": "168.4900",
+      "4. close": "171.4800",
+      "5. volume": "1430780147",
+    },
+    "2024-02-29": {
+      "1. open": "183.9850",
+      "2. high": "191.0500",
+      "3. low": "179.2500",
+      "4. close": "180.7500",
+      "5. volume": "1161711745",
+    },
+    "2024-01-31": {
+      "1. open": "187.1500",
+      "2. high": "196.3800",
+      "3. low": "180.1700",
+      "4. close": "184.4000",
+      "5. volume": "1187139861",
+    },
+  },
+};
+
+let volumeData = [];
+
+const eachMonthData = monthlyData["Monthly Time Series"];
+console.log(eachMonthData);
+
+for (const date in eachMonthData) {
+  volumeData.push(eachMonthData[date]["5. volume"]);
+}
+
+const data = volumeData.reverse();
+
+const ctx = document.querySelector(".chart").getContext("2d");
+new Chart(ctx, {
+  type: "bar",
+  data: {
+    labels: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ], // X-axis labels
+    datasets: [
+      {
+        label: "Monthly Data 2024",
+        data: data,
+        lineTension:0.3,
+        backgroundColor:"blue",
+        borderColor:"aliceblue",
+        borderCapStyle:"round",
+        borderJoinStyle:"round",
+        pointHoverBorderWidth:5,
+        pointHoverBorderColor:"blue"
+      },
+    ],
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  },
+});
+
+const rightHeading = document.querySelector(".rightHeading");
 const subHeaders = rightHeading.querySelectorAll("h5");
 
-subHeaders.forEach((menu)=>{
-  menu.addEventListener('click',()=>{
-    console.log("clicked")
-    rightHeading.querySelector('.active').classList.remove('active')
-      menu.classList.add('active')
-})
-})
+subHeaders.forEach((menu) => {
+  menu.addEventListener("click", () => {
+    console.log("clicked");
+    rightHeading.querySelector(".active").classList.remove("active");
+    menu.classList.add("active");
+  });
+});
 
 const activeStocksBody = document.getElementById("activeStocks");
 const topGainersBody = document.getElementById("topGainers");
 const topLosersBody = document.getElementById("topLosers");
 
-const activeStocks =topGainersLosersDtata["most_actively_traded"]
+const activeStocks = topGainersLosersDtata["most_actively_traded"];
 // console.log(activeStocks);
 
 activeStocks.forEach((stocks) => {
@@ -685,10 +832,21 @@ activeStocks.forEach((stocks) => {
               <td class="changePercentage" style="color:#FFB900;">${stocks.change_percentage}</td>
               `;
   // console.log(tr);
-  activeStocksBody.appendChild(tr)
-  activeStocksBody.style.display="flex"
-  topGainersBody.style.display="none"
-  topLosersBody.style.display="none"  
+  activeStocksBody.appendChild(tr);
+  activeStocksBody.style.display = "flex";
+  topGainersBody.style.display = "none";
+  topLosersBody.style.display = "none";
+});
+
+const activeStocksEle = document.querySelectorAll("#activeStocks tr");
+console.log(activeStocksEle);
+
+activeStocksEle.forEach((ele) => {
+  ele.addEventListener("click", () => {
+    const clickedElement = ele;
+    const ticker = clickedElement.querySelector(".stockName").textContent;
+    showGraph(ticker);
+  });
 });
 
 const addedStocks = new Set();
@@ -712,34 +870,52 @@ const stocks = document.querySelectorAll(".stocks");
 
 const body = document.querySelector(".tableBody");
 
-stocks.forEach((stock) => {
-  stock.addEventListener("click", () => {
-    const id = stock.getAttribute("data-id");
-    const data = stockData.find((obj) => obj.id == id);
-    const symbol = data.symbol;
-    console.log(symbol);
-    showGraph(symbol);
-  });
-});
+// stocks.forEach((stock) => {
+//   stock.addEventListener("click", () => {
+//     const id = stock.getAttribute("data-id");
+//     const data = stockData.find((obj) => obj.id == id);
+//     const symbol = data.symbol;
+//     console.log(symbol);
+//     showGraph(symbol);
+//   });
+// });
 
 async function showGraph(symbol) {
+  console.log(symbol);
+
   const apikey = "CTHM6KRGP3QSVY85";
-  const url = `"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${apikey}"`;
-  await fetch(url)
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${apikey}`;
+  const data = await fetch(url)
     .then((res) => res.json())
-    .then((monthlyData) => console.log(monthlyData));
+    .then((monthlyData) => {
+      return monthlyData;
+    });
+  console.log(data);
+  console.log(data["Time Series (Daily)"]);
+
+  //   if (data["Time Series (Daily)"]){
+  //     const filterData=[]
+  //     const dailyData = data["Time Series (Daily)"]
+
+  //   for (const date in dailyData){
+  //     if (date.startsWith("2024")){
+  //       filterData[date]=dailyData[date]
+  //       console.log(filterData);
+
+  //     }
+  //   }
+  // }
 }
 
-
-subHeaders.forEach((header,i)=>{
-  header.addEventListener("click",()=>{
+subHeaders.forEach((header, i) => {
+  header.addEventListener("click", () => {
     if (i == 0) {
       while (activeStocksBody.firstChild) {
         activeStocksBody.removeChild(activeStocksBody.firstChild);
       }
-      const activeStocks =topGainersLosersDtata["most_actively_traded"]
+      const activeStocks = topGainersLosersDtata["most_actively_traded"];
       console.log(activeStocks);
-      
+
       activeStocks.forEach((stocks) => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -750,20 +926,18 @@ subHeaders.forEach((header,i)=>{
                     <td class="changePercentage" style="color:#FFB900;">${stocks.change_percentage}</td>
                     `;
         // console.log(tr);
-        activeStocksBody.appendChild(tr)
-        activeStocksBody.style.display="flex"
-        topGainersBody.style.display="none"
-        topLosersBody.style.display="none"
+        activeStocksBody.appendChild(tr);
+        activeStocksBody.style.display = "flex";
+        topGainersBody.style.display = "none";
+        topLosersBody.style.display = "none";
       });
-
-    } 
-    else if (i == 1) {
+    } else if (i == 1) {
       while (topGainersBody.firstChild) {
         topGainersBody.removeChild(topGainersBody.firstChild);
       }
-      const topGainersStocks =topGainersLosersDtata["top_gainers"]
+      const topGainersStocks = topGainersLosersDtata["top_gainers"];
       // console.log(topGainersStocks);
-      
+
       topGainersStocks.forEach((stocks) => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -774,19 +948,18 @@ subHeaders.forEach((header,i)=>{
                     <td class="changePercentage" style="color:rgb(25, 199, 13);">${stocks.change_percentage}</td>
                     `;
         // console.log(tr);
-        topGainersBody.appendChild(tr)
-        topGainersBody.style.display="flex"
-        topLosersBody.style.display="none"
-        activeStocksBody.style.display="none" 
+        topGainersBody.appendChild(tr);
+        topGainersBody.style.display = "flex";
+        topLosersBody.style.display = "none";
+        activeStocksBody.style.display = "none";
       });
-    } 
-    else if (i == 2) {
+    } else if (i == 2) {
       while (topLosersBody.firstChild) {
         topLosersBody.removeChild(topLosersBody.firstChild);
       }
-      const topLosersStocks =topGainersLosersDtata["top_losers"]
+      const topLosersStocks = topGainersLosersDtata["top_losers"];
       // console.log(topLosersStocks);
-      
+
       topLosersStocks.forEach((stocks) => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -797,16 +970,16 @@ subHeaders.forEach((header,i)=>{
                     <td class="changePercentage" style="color:red;">${stocks.change_percentage}</td>
                     `;
         // console.log(tr);
-        topLosersBody.appendChild(tr)
-        topLosersBody.style.display="flex"
-        topGainersBody.style.display="none"
-        activeStocksBody.style.display="none"
+        topLosersBody.appendChild(tr);
+        topLosersBody.style.display = "flex";
+        topGainersBody.style.display = "none";
+        activeStocksBody.style.display = "none";
       });
     } else {
       alert("something Went Wrong");
     }
-  })
-})
+  });
+});
 /* 
 subHeaders.forEach((header, i) => {
   header.addEventListener("click", () => {
