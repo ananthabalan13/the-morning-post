@@ -226,7 +226,26 @@ const stockData = [
   },
 ];
 
-const topGainersLosersDtata = {
+const addedStocks = new Set();
+const stockDetailsDiv = document.querySelector(".stockDetails");
+
+// trndingStock showing function without api
+stockData.forEach((stock) => {
+  const stocks = `
+    <div class="stocks" data-id=${stock.id}>
+                <h2>${stock.symbol}</h2>
+                <div class="stock-details">
+                    <h3>${stock.currentPrice}</h3>
+                    <p>${stock.peRatio}%</p>
+                </div>
+            </div>
+
+  `;
+  stockDetailsDiv.innerHTML += stocks;
+});
+const stocks = document.querySelectorAll(".stocks");
+
+const topGainersLosersData = {
   metadata: "Top gainers, losers, and most actively traded US tickers",
   last_updated: "2025-01-21 16:15:59 US/Eastern",
   top_gainers: [
@@ -785,13 +804,13 @@ new Chart(ctx, {
       {
         label: "Monthly Data 2024",
         data: data,
-        lineTension:0.3,
-        backgroundColor:"blue",
-        borderColor:"aliceblue",
-        borderCapStyle:"round",
-        borderJoinStyle:"round",
-        pointHoverBorderWidth:5,
-        pointHoverBorderColor:"blue"
+        lineTension: 0.3,
+        backgroundColor: "blue",
+        borderColor: "aliceblue",
+        borderCapStyle: "round",
+        borderJoinStyle: "round",
+        pointHoverBorderWidth: 5,
+        pointHoverBorderColor: "blue",
       },
     ],
   },
@@ -819,54 +838,24 @@ const activeStocksBody = document.getElementById("activeStocks");
 const topGainersBody = document.getElementById("topGainers");
 const topLosersBody = document.getElementById("topLosers");
 
-const activeStocks = topGainersLosersDtata["most_actively_traded"];
+const activeStocks = topGainersLosersData["most_actively_traded"];
 // console.log(activeStocks);
 
-activeStocks.forEach((stocks) => {
-  const tr = document.createElement("tr");
-  tr.innerHTML = `
-              <td class="stockName">${stocks.ticker}</td>
-              <td class="stockPrice">${stocks.price}</td>
-              <td class="changeAmount"  style="font-weight: 800">${stocks.change_amount}</td>
-              <td class="volume">${stocks.volume}</td>
-              <td class="changePercentage" style="color:#FFB900;">${stocks.change_percentage}</td>
-              `;
-  // console.log(tr);
-  activeStocksBody.appendChild(tr);
-  activeStocksBody.style.display = "flex";
-  topGainersBody.style.display = "none";
-  topLosersBody.style.display = "none";
-});
-
-const activeStocksEle = document.querySelectorAll("#activeStocks tr");
-console.log(activeStocksEle);
-
-activeStocksEle.forEach((ele) => {
-  ele.addEventListener("click", () => {
-    const clickedElement = ele;
-    const ticker = clickedElement.querySelector(".stockName").textContent;
-    showGraph(ticker);
-  });
-});
-
-const addedStocks = new Set();
-const stockDetailsDiv = document.querySelector(".stockDetails");
-
-stockData.forEach((stock) => {
-  const stocks = `
-    <div class="stocks" data-id=${stock.id}>
-                <h2>${stock.symbol}</h2>
-                <div class="stock-details">
-                    <h3>${stock.currentPrice}</h3>
-                    <p>${stock.peRatio}%</p>
-                </div>
-            </div>
-
-  `;
-  stockDetailsDiv.innerHTML += stocks;
-});
-const stocks = document.querySelectorAll(".stocks");
-// console.log(stocks);
+// activeStocks.forEach((stocks) => {
+//   const tr = document.createElement("tr");
+//   tr.innerHTML = `
+//               <td class="stockName">${stocks.ticker}</td>
+//               <td class="stockPrice">${stocks.price}</td>
+//               <td class="changeAmount"  style="font-weight: 800">${stocks.change_amount}</td>
+//               <td class="volume">${stocks.volume}</td>
+//               <td class="changePercentage" style="color:#FFB900;">${stocks.change_percentage}</td>
+//               `;
+//   // console.log(tr);
+//   activeStocksBody.appendChild(tr);
+//   activeStocksBody.style.display = "flex";
+//   topGainersBody.style.display = "none";
+//   topLosersBody.style.display = "none";
+// });
 
 const body = document.querySelector(".tableBody");
 
@@ -891,23 +880,22 @@ async function showGraph(symbol) {
       return monthlyData;
     });
   console.log(data);
-  console.log(data["Time Series (Daily)"]);
+  console.log(data["Monthly Time Series"]);
 
-  //   if (data["Time Series (Daily)"]){
-  //     const filterData=[]
-  //     const dailyData = data["Time Series (Daily)"]
+    if (data["Monthly Time Series"]){
+      const filterData=[]
+      const dailyData = data["Monthly Time Series"]
 
-  //   for (const date in dailyData){
-  //     if (date.startsWith("2024")){
-  //       filterData[date]=dailyData[date]
-  //       console.log(filterData);
-
-  //     }
-  //   }
-  // }
+    for (const date in dailyData){
+      if (date.startsWith("2024")){
+        filterData[date]=dailyData[date]
+      }
+      console.log(filterData);
+    }
+  }
 }
 
-subHeaders.forEach((header, i) => {
+/* subHeaders.forEach((header, i) => {
   header.addEventListener("click", () => {
     if (i == 0) {
       while (activeStocksBody.firstChild) {
@@ -979,31 +967,66 @@ subHeaders.forEach((header, i) => {
       alert("something Went Wrong");
     }
   });
-});
-/* 
+}); */
+
 subHeaders.forEach((header, i) => {
   header.addEventListener("click", () => {
     console.log(header, i);
 
     if (i == 0) {
+      while (activeStocksBody.firstChild) {
+        activeStocksBody.removeChild(activeStocksBody.firstChild);
+      }
       mostActivelyStocks();
-       header.classList.remove("active")    
-        header.classList.add("active") 
-    } else if (i == 1) {
+      const activeStocksEle = document.querySelectorAll("#activeStocks tr");
+      console.log(activeStocksEle);
+
+      activeStocksEle.forEach((ele) => {
+        ele.addEventListener("click", () => {
+          const clickedElement = ele;
+          const ticker = clickedElement.querySelector(".stockName").textContent;
+          showGraph(ticker);
+        });
+      });
+    } 
+    else if (i == 1) {
+      while (topGainersBody.firstChild) {
+        topGainersBody.removeChild(topGainersBody.firstChild);
+      }
       topGainersStocks();
-       header.classList.remove("active")    
-        header.classList.add("active") 
-    } else if (i == 2) {
+
+      const gainerStocksEle = document.querySelectorAll("#topGainers tr");
+      console.log(gainerStocksEle);
+
+      gainerStocksEle.forEach((ele) => {
+        ele.addEventListener("click", () => {
+          const clickedElement = ele;
+          const ticker = clickedElement.querySelector(".stockName").textContent;
+          showGraph(ticker);
+        });
+      });
+    }
+     else if (i == 2) {
+      while (topLosersBody.firstChild) {
+        topLosersBody.removeChild(topLosersBody.firstChild);
+      }
       topLoserStocks();
-       header.classList.remove("active")    
-        header.classList.add("active") 
+
+      const loserStocksEle = document.querySelectorAll("#topLosers tr");
+      console.log(loserStocksEle);
+
+      loserStocksEle.forEach((ele) => {
+        ele.addEventListener("click", () => {
+          const clickedElement = ele;
+          const ticker = clickedElement.querySelector(".stockName").textContent;
+          showGraph(ticker);
+        });
+      });
     } else {
       alert("something Went Wrong");
     }
   });
 });
-
-
 
 console.log(activeStocksBody, topGainersBody, topLosersBody);
 
@@ -1027,12 +1050,14 @@ async function mostActivelyStocks() {
                 <td class="stockPrice">${stocks.price}</td>
                 <td class="changeAmount"  style="font-weight: 800">${stocks.change_amount}</td>
                 <td class="volume">${stocks.volume}</td>
-                <td class="dayLow" style="color: yellow;">${stocks.change_percentage}</td>
+                <td class="dayLow" style="color:#FFB900">${stocks.change_percentage}</td>
                 `;
     console.log(tr);
-    activeStocksBody.innerHTML += tr;
+    activeStocksBody.appendChild(tr)
   });
 }
+
+// mostActivelyStocks()  
 
 // top gainers stocks
 
@@ -1042,9 +1067,7 @@ async function topGainersStocks() {
   fetch(url);
   const topGainersStocks = await fetch(url)
     .then((res) => res.json())
-    .then((data) => {
-      return data["top_gainers"];
-    });
+    .then((data) => {return data["top_gainers"]});
   console.log(topGainersStocks);
 
   topGainersStocks.forEach((stocks) => {
@@ -1057,7 +1080,7 @@ async function topGainersStocks() {
                 <td class="dayLow" style="color: green;">${stocks.change_percentage}</td>
                 `;
     console.log(tr);
-    topGainersStocks.innerHTML += tr;
+    topGainersStocks.appendChild(tr);
   });
 }
 
@@ -1081,9 +1104,9 @@ async function topLoserStocks() {
                 <td class="stockPrice">${stocks.price}</td>
                 <td class="changeAmount"  style="font-weight: 800">${stocks.change_amount}</td>
                 <td class="volume">${stocks.volume}</td>
-                <td class="dayLow" style="color: green;">${stocks.change_percentage}</td>
+                <td class="dayLow" style="color: red;">${stocks.change_percentage}</td>
                 `;
     console.log(tr);
-    topLosersBody.innerHTML += tr;
+    topLosersBody.appendChild(tr);
   });
-} */
+}
