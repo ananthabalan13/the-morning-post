@@ -839,23 +839,23 @@ const topGainersBody = document.getElementById("topGainers");
 const topLosersBody = document.getElementById("topLosers");
 
 const activeStocks = topGainersLosersData["most_actively_traded"];
-// console.log(activeStocks);
+console.log(activeStocks);
 
-// activeStocks.forEach((stocks) => {
-//   const tr = document.createElement("tr");
-//   tr.innerHTML = `
-//               <td class="stockName">${stocks.ticker}</td>
-//               <td class="stockPrice">${stocks.price}</td>
-//               <td class="changeAmount"  style="font-weight: 800">${stocks.change_amount}</td>
-//               <td class="volume">${stocks.volume}</td>
-//               <td class="changePercentage" style="color:#FFB900;">${stocks.change_percentage}</td>
-//               `;
-//   // console.log(tr);
-//   activeStocksBody.appendChild(tr);
-//   activeStocksBody.style.display = "flex";
-//   topGainersBody.style.display = "none";
-//   topLosersBody.style.display = "none";
-// });
+activeStocks.forEach((stocks) => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+              <td class="stockName">${stocks.ticker}</td>
+              <td class="stockPrice">${stocks.price}</td>
+              <td class="changeAmount"  style="font-weight: 800">${stocks.change_amount}</td>
+              <td class="volume">${stocks.volume}</td>
+              <td class="changePercentage" style="color:#FFB900;">${stocks.change_percentage}</td>
+              `;
+  // console.log(tr);
+  activeStocksBody.appendChild(tr);
+  activeStocksBody.style.display = "flex";
+  topGainersBody.style.display = "none";
+  topLosersBody.style.display = "none";
+});
 
 const body = document.querySelector(".tableBody");
 
@@ -895,7 +895,7 @@ async function showGraph(symbol) {
   }
 }
 
-/* subHeaders.forEach((header, i) => {
+subHeaders.forEach((header, i) => {
   header.addEventListener("click", () => {
     if (i == 0) {
       while (activeStocksBody.firstChild) {
@@ -923,7 +923,7 @@ async function showGraph(symbol) {
       while (topGainersBody.firstChild) {
         topGainersBody.removeChild(topGainersBody.firstChild);
       }
-      const topGainersStocks = topGainersLosersDtata["top_gainers"];
+      const topGainersStocks = topGainersLosersData["top_gainers"];
       // console.log(topGainersStocks);
 
       topGainersStocks.forEach((stocks) => {
@@ -945,7 +945,7 @@ async function showGraph(symbol) {
       while (topLosersBody.firstChild) {
         topLosersBody.removeChild(topLosersBody.firstChild);
       }
-      const topLosersStocks = topGainersLosersDtata["top_losers"];
+      const topLosersStocks = topGainersLosersData["top_losers"];
       // console.log(topLosersStocks);
 
       topLosersStocks.forEach((stocks) => {
@@ -967,9 +967,9 @@ async function showGraph(symbol) {
       alert("something Went Wrong");
     }
   });
-}); */
+});
 
-subHeaders.forEach((header, i) => {
+/* subHeaders.forEach((header, i) => {
   header.addEventListener("click", () => {
     console.log(header, i);
 
@@ -1026,13 +1026,13 @@ subHeaders.forEach((header, i) => {
       alert("something Went Wrong");
     }
   });
-});
+}); */
 
 console.log(activeStocksBody, topGainersBody, topLosersBody);
 
 // mostactively stocks
 
-async function mostActivelyStocks() {
+/* async function mostActivelyStocks() {
   const apikey = "CTHM6KRGP3QSVY85";
   const url = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${apikey}`;
   fetch(url);
@@ -1053,15 +1053,18 @@ async function mostActivelyStocks() {
                 <td class="dayLow" style="color:#FFB900">${stocks.change_percentage}</td>
                 `;
     console.log(tr);
-    activeStocksBody.appendChild(tr)
+    topLosersBody.style.display = "none";
+    topGainersBody.style.display = "none";
+    activeStocksBody.style.display = "flex";
+    activeStocksBody.appendChild(tr) 
   });
-}
+} */
 
 // mostActivelyStocks()  
 
 // top gainers stocks
 
-async function topGainersStocks() {
+/* async function topGainersStocks() {
   const apikey = "CTHM6KRGP3QSVY85";
   const url = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${apikey}`;
   fetch(url);
@@ -1080,13 +1083,16 @@ async function topGainersStocks() {
                 <td class="dayLow" style="color: green;">${stocks.change_percentage}</td>
                 `;
     console.log(tr);
-    topGainersStocks.appendChild(tr);
+    topGainersBody.appendChild(tr);
+    topGainersBody.style.display = "flex";                  
+    topLosersBody.style.display = "none";
+    activeStocksBody.style.display = "none";
   });
-}
+} */
 
 // losers stocks
 
-async function topLoserStocks() {
+/* async function topLoserStocks() {
   const apikey = "CTHM6KRGP3QSVY85";
   const url = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${apikey}`;
   fetch(url);
@@ -1107,6 +1113,10 @@ async function topLoserStocks() {
                 <td class="dayLow" style="color: red;">${stocks.change_percentage}</td>
                 `;
     console.log(tr);
+    topLosersBody.style.display = "flex";
+    topGainersBody.style.display = "none";
+    activeStocksBody.style.display = "none";
     topLosersBody.appendChild(tr);
+
   });
-}
+} */
