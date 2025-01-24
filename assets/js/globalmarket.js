@@ -841,7 +841,7 @@ const topLosersBody = document.getElementById("topLosers");
 const activeStocks = topGainersLosersData["most_actively_traded"];
 console.log(activeStocks);
 
-activeStocks.forEach((stocks) => {
+/* activeStocks.forEach((stocks) => {
   const tr = document.createElement("tr");
   tr.innerHTML = `
               <td class="stockName">${stocks.ticker}</td>
@@ -855,7 +855,7 @@ activeStocks.forEach((stocks) => {
   activeStocksBody.style.display = "flex";
   topGainersBody.style.display = "none";
   topLosersBody.style.display = "none";
-});
+}); */
 
 const body = document.querySelector(".tableBody");
 
@@ -895,7 +895,7 @@ async function showGraph(symbol) {
   }
 }
 
-subHeaders.forEach((header, i) => {
+/* subHeaders.forEach((header, i) => {
   header.addEventListener("click", () => {
     if (i == 0) {
       while (activeStocksBody.firstChild) {
@@ -967,7 +967,7 @@ subHeaders.forEach((header, i) => {
       alert("something Went Wrong");
     }
   });
-});
+}); */
 
 /* subHeaders.forEach((header, i) => {
   header.addEventListener("click", () => {
