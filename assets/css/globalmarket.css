@@ -44,21 +44,32 @@
     cursor: pointer;
   }
 
-  .bodySection .mainContentWrapper .heading .rightHeading{
+.rightHeading{
     display: flex;
+    flex-direction: column;
     align-items: center;
     column-gap: 50px;
     color: #161616c4;
+    text-align: center;
   }
+  .rightHeading h5{
+    cursor: pointer;
+  }
+
   .rightHeading .active{
     color: black;
     font-weight: 800;
     border-bottom: 1px solid black;
   }
-  .bodySection .mainContentWrapper .heading .rightHeading h5:hover{
+.rightHeading h5:hover{
     color: black;
   }
-  .bodySection .mainContentWrapper table{
+  .tableBody{
+    display: flex;
+    flex-direction: column;
+  }
+
+/*   .bodySection .mainContentWrapper table{
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -108,7 +119,7 @@ table tbody tr td{
   }
   table tbody tr:hover{
     background-color: #3b393940;
-  }
+  } */
   .bodySection .relatedPostContainer {
     width: 30%;
     background-color: white;
@@ -134,20 +145,27 @@ table tbody tr td{
 .stocks:hover{
     background-color: rgba(211, 211, 211, 0.626);
 }
+.stocks .stock-details{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .stocks .stock-details p{
-    color: rgb(25, 199, 13);
-    text-align: right;
+    color: rgb(124, 129, 27);
+}
+.stocks .stock-details h3{
+  text-align: right;
 }
 .chartDiv{
   width: calc(100% - 10px);
   display:flex;
   height: 70%;
-  column-gap: 10px;
   margin-left: 10px;
   margin-top: 10px;
+  column-gap: 10px;
 }
 .chart{
-  width: 100%;
+  width: 95%;
   border: 1px solid #000;
   border-radius: 20px;
 }
