@@ -1,190 +1,228 @@
 .bodySection {
-    width: 100%;
-    height: 700px;
-    display: flex;
-    column-gap: 5%;
-    padding: 30px;
-    background-color: rgba(211, 211, 211, 0.2);
-  }
-  /* width */
+  width: 100%;
+  height: 700px;
+  display: flex;
+  column-gap: 5%;
+  padding: 30px;
+  background-color: rgba(211, 211, 211, 0.2);
+}
+/* width */
 .customScroll::-webkit-scrollbar {
-    width: 5px;
-  }
-  
-  /* Track */
-  .customScroll::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-  
-  /* Handle */
-  .customScroll::-webkit-scrollbar-thumb {
-    background: #8888889b;
-  }
-  .bodySection .mainContentWrapper {
-    width: 65%;
-    height: 100%;
-    background-color: white;
-    box-shadow: var(--primary-Boxshadow);
-    border-radius: 20px;
-  }
-  .bodySection .mainContentWrapper .image {
-    width: 100%;
-    height: 50%;
-    background-color: #333;
-  }
-  .bodySection .mainContentWrapper .overViewDetails{
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-  .bodySection .mainContentWrapper .heading{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    cursor: pointer;
-  }
-
-.rightHeading{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    column-gap: 50px;
-    color: #161616c4;
-    text-align: center;
-  }
-  .rightHeading h5{
-    cursor: pointer;
-  }
-
-  .rightHeading .active{
-    color: black;
-    font-weight: 800;
-    border-bottom: 1px solid black;
-  }
-.rightHeading h5:hover{
-    color: black;
-  }
-  .tableBody{
-    display: flex;
-    flex-direction: column;
-  }
-
-/*   .bodySection .mainContentWrapper table{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  table thead tr{
-    display: flex;
-    width: 100%;
-    height: 40px; 
-    border-bottom: 1px solid #3b393940;
-    align-items: center;
-    justify-content: center;
-  }
-table th{
-    width: calc(100% / 5);
-    align-items: center;
-    text-align: center;
-  }
-  table tbody{
-    max-height: 202px;
-    overflow-y: scroll;
-    cursor: pointer;
-    flex-direction: column;
-  }
-table tbody tr {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    border-bottom: 1px solid #3b393940;
-    transition: ease-in-out 0.3s;
-    min-height: 50px;
-    max-height: auto;
-  }
-  table tbody tr:nth-child(even){
-    background-color:#3b393923 ;
-  }
-table tbody tr td{
-    width:calc(100% / 5);
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    padding: 5px;
-    font-size: 13px;
-    word-wrap: break-word;
-    white-space: normal; 
-    overflow: hidden;
-  }
-  table tbody tr:hover{
-    background-color: #3b393940;
-  } */
-  .bodySection .relatedPostContainer {
-    width: 30%;
-    background-color: white;
-    box-shadow: var(--primary-Boxshadow);
-    border-radius: 20px;
-    padding: 12px 20px;
-    overflow-y: auto;
-  }
-  .bodySection .relatedPostContainer .headingText {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #3333334b;
-    padding-bottom: 10px;
-  }
-.stocks{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0px 10px;
-    border-bottom: 1px solid #3b393940;
+  width: 5px;
 }
-.stocks:hover{
-    background-color: rgba(211, 211, 211, 0.626);
+
+/* Track */
+.customScroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
-.stocks .stock-details{
+
+/* Handle */
+.customScroll::-webkit-scrollbar-thumb {
+  background: #8888889b;
+}
+.bodySection .mainContentWrapper {
+  width: 65%;
+  height: 100%;
+  /* background-color: white; */
+  /* box-shadow: var(--primary-Boxshadow); */
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  row-gap: 10px;
 }
-.stocks .stock-details p{
-    color: rgb(124, 129, 27);
+.headerBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 11px;
 }
-.stocks .stock-details h3{
-  text-align: right;
+.headerBox a {
+  padding: 7px;
+  background-color: rgb(11, 61, 211);
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 7px;
 }
-.chartDiv{
+.headerBox input {
+  width: 40%;
+  background-color: white;
+  border: 1px solid #33333324;
+  padding: 7px;
+  border-radius: 7px;
+  outline: none;
+  align-items: center;
+  font-size: 16px;
+}
+.chartDiv {
   width: calc(100% - 10px);
-  display:flex;
-  height: 70%;
+  height: 90%;
+  border: 1px solid #000;
   margin-left: 10px;
   margin-top: 10px;
   column-gap: 10px;
-}
-.chart{
-  width: 95%;
-  border: 1px solid #000;
+  background-color: white;
+  box-shadow: var(--primary-Boxshadow);
+  padding: 20px;
   border-radius: 20px;
-}
-.dataVisibleDiv{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  row-gap: 20px;
 }
-.dataVisibleDiv div{
-  background-color: #000;
-  width: 20px;
+.chartDiv .graphDetails {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chartDiv .graph {
+  width: 100%;
+  height: 84%;
+  position: relative;
+  /* background-color: #333; */
+}
+.graph .chart {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #00000058;
+  border-radius: 20px;
+  overflow-x: scroll;
+}
+.dataVisibleDiv {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  margin-bottom: 10px;
+}
+.dataVisibleDiv div {
+  background-color: rgb(11, 61, 211);
+  color: rgb(255, 255, 255);
+  width: 40px;
   height: 20px;
-  color: aliceblue;
-  border-radius: 3px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 12px;
-} 
+  font-size: 14px;
+}
+.similarCompanies {
+  background-color: white;
+  box-shadow: var(--primary-Boxshadow);
+  height: 25%;
+  display: none;
+}
+.similarCompanies > :first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.rightHeading {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 50px;
+  color: #161616c4;
+  text-align: center;
+}
+.rightHeading h3 {
+  cursor: pointer;
+}
+
+.rightHeading .active {
+  color: black;
+  font-weight: 800;
+  border-bottom: 1px solid black;
+}
+.rightHeading h5:hover {
+  color: black;
+}
+.tableBody {
+  display: flex;
+  flex-direction: column;
+}
+.bodySection .relatedPostContainer {
+  width: 30%;
+  background-color: white;
+  box-shadow: var(--primary-Boxshadow);
+  border-radius: 20px;
+  padding: 12px 20px;
+  overflow-y: auto;
+}
+.bodySection .relatedPostContainer .headingText {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #3333334b;
+  padding-bottom: 10px;
+}
+.stocks {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 10px;
+  border-bottom: 1px solid #3b393940;
+}
+.stocks:hover {
+  background-color: rgba(211, 211, 211, 0.626);
+}
+.stocks .stock-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.stocks .stock-details p {
+  color: rgb(124, 129, 27);
+  text-align: end;
+}
+.stocks .stock-details h3 {
+  text-align: right;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: rotate 1s linear infinite;
+  border-radius: 50%;
+}
+.loader::before,
+.loader::after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0px;
+  border-radius: 50%;
+  border: 5px solid #1b1bbb;
+  animation: prixClipFix 2s linear infinite;
+}
+.loader::after {
+  inset: 8px;
+  transform: rotate3d(90, 90, 0, 180deg);
+  border-color: #ff3d00;
+}
+
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes prixClipFix {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+  75%,
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+}

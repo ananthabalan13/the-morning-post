@@ -1,5 +1,3 @@
-const addedStocks = new Set();
-
 const topGainersLosersData = {
   metadata: "Top gainers, losers, and most actively traded US tickers",
   last_updated: "2025-01-21 16:15:59 US/Eastern",
@@ -431,106 +429,11 @@ const topGainersLosersData = {
   ],
 };
 
-const monthlyData = {
-  "Meta Data": {
-    "1. Information": "Monthly Prices (open, high, low, close) and Volumes",
-    "2. Symbol": "AAPL",
-    "3. Last Refreshed": "2025-01-22",
-    "4. Time Zone": "US/Eastern",
-  },
-  "Monthly Time Series": {
-    "2024-12-31": {
-      "1. open": "237.2700",
-      "2. high": "260.1000",
-      "3. low": "237.1600",
-      "4. close": "250.4200",
-      "5. volume": "977942014",
-    },
-    "2024-11-29": {
-      "1. open": "220.9650",
-      "2. high": "237.8100",
-      "3. low": "219.7100",
-      "4. close": "237.3300",
-      "5. volume": "891640714",
-    },
-    "2024-10-31": {
-      "1. open": "229.5200",
-      "2. high": "237.4900",
-      "3. low": "221.3300",
-      "4. close": "225.9100",
-      "5. volume": "930835961",
-    },
-    "2024-09-30": {
-      "1. open": "228.5500",
-      "2. high": "233.0900",
-      "3. low": "213.9200",
-      "4. close": "233.0000",
-      "5. volume": "1231814423",
-    },
-    "2024-08-30": {
-      "1. open": "224.3700",
-      "2. high": "232.9200",
-      "3. low": "196.0000",
-      "4. close": "229.0000",
-      "5. volume": "1122666993",
-    },
-    "2024-07-31": {
-      "1. open": "212.0900",
-      "2. high": "237.2300",
-      "3. low": "211.9200",
-      "4. close": "222.0800",
-      "5. volume": "1153193377",
-    },
-    "2024-06-28": {
-      "1. open": "192.9000",
-      "2. high": "220.2000",
-      "3. low": "192.1500",
-      "4. close": "210.6200",
-      "5. volume": "1723984420",
-    },
-    "2024-05-31": {
-      "1. open": "169.5800",
-      "2. high": "193.0000",
-      "3. low": "169.1100",
-      "4. close": "192.2500",
-      "5. volume": "1336570142",
-    },
-    "2024-04-30": {
-      "1. open": "171.1900",
-      "2. high": "178.3600",
-      "3. low": "164.0750",
-      "4. close": "170.3300",
-      "5. volume": "1240410671",
-    },
-    "2024-03-28": {
-      "1. open": "179.5500",
-      "2. high": "180.5300",
-      "3. low": "168.4900",
-      "4. close": "171.4800",
-      "5. volume": "1430780147",
-    },
-    "2024-02-29": {
-      "1. open": "183.9850",
-      "2. high": "191.0500",
-      "3. low": "179.2500",
-      "4. close": "180.7500",
-      "5. volume": "1161711745",
-    },
-    "2024-01-31": {
-      "1. open": "187.1500",
-      "2. high": "196.3800",
-      "3. low": "180.1700",
-      "4. close": "184.4000",
-      "5. volume": "1187139861",
-    },
-  },
-};
-
-const eachMonthData = monthlyData["Monthly Time Series"];
-console.log(eachMonthData);
-
 const rightHeading = document.querySelector(".rightHeading");
-const subHeaders = rightHeading.querySelectorAll("h5");
+const subHeaders = rightHeading.querySelectorAll("h3");
+const dataVisibleDivArr = document.querySelectorAll(
+  ".dataVisibleDiv .dataVisible"
+);
 
 subHeaders.forEach((menu) => {
   menu.addEventListener("click", () => {
@@ -544,66 +447,41 @@ const activeStocksBody = document.getElementById("activeStocks");
 const topGainersBody = document.getElementById("topGainers");
 const topLosersBody = document.getElementById("topLosers");
 
-const activeStocks = topGainersLosersData["most_actively_traded"];
-console.log(activeStocks);
-
-activeStocks.forEach((stock) => {
-  const stocks = `
-    <div class="stocks">
-                <h2>${stock.ticker}</h2>
-                <div class="stock-details">
-                    <h3>${stock.price}</h3>
-                    <p>${stock.change_percentage}</p>
-                </div>
-            </div>
-
-  `;
-  activeStocksBody.innerHTML += stocks;
-  activeStocksBody.style.display = "flex";
-  topGainersBody.style.display = "none";
-  topLosersBody.style.display = "none";
-});
-
 subHeaders.forEach((header, i) => {
   header.addEventListener("click", () => {
     if (i == 0) {
-      while (activeStocksBody.firstChild) {
-        activeStocksBody.removeChild(activeStocksBody.firstChild);
-      }
       const activeStocks = topGainersLosersData["most_actively_traded"];
-
+      activeStocksBody.innerHTML = "";
       activeStocks.forEach((stock) => {
         const stocks = `
-    <div class="stocks">
-                <h2>${stock.ticker}</h2>
-                <div class="stock-details">
-                    <h3>${stock.price}</h3>
-                    <p>${stock.change_percentage}</p>
-                </div>
-            </div>
-  `;
+          <div class="stocks">
+                      <h2>${stock.ticker}</h2>
+                      <div class="stock-details">
+                          <h3>${stock.price}</h3>
+                          <p>${toFixNumber(stock.change_percentage)}</p>
+                      </div>
+                  </div>
+        `;
         activeStocksBody.innerHTML += stocks;
         activeStocksBody.style.display = "flex";
         topGainersBody.style.display = "none";
         topLosersBody.style.display = "none";
       });
     } else if (i == 1) {
-      while (topGainersBody.firstChild) {
-        topGainersBody.removeChild(topGainersBody.firstChild);
-      }
       const topGainersStocks = topGainersLosersData["top_gainers"];
       // console.log(topGainersStocks);
-
+      topGainersBody.innerHTML = "";
       topGainersStocks.forEach((stock) => {
         const stocks = `
     <div class="stocks">
                 <h2>${stock.ticker}</h2>
                 <div class="stock-details">
                     <h3>${stock.price}</h3>
-                    <p style="color: green;">${stock.change_percentage}</p>
+                    <p style="color: green;">${toFixNumber(
+                      stock.change_percentage
+                    )}</p>
                 </div>
             </div>
-
   `;
         topGainersBody.innerHTML += stocks;
         activeStocksBody.style.display = "none";
@@ -613,22 +491,20 @@ subHeaders.forEach((header, i) => {
       const topGainerStocks = document.querySelectorAll("#topGainers .stocks");
       console.log(topGainerStocks);
     } else if (i == 2) {
-      while (topLosersBody.firstChild) {
-        topLosersBody.removeChild(topLosersBody.firstChild);
-      }
       const topLosersStocks = topGainersLosersData["top_losers"];
       // console.log(topLosersStocks);
-
+      topLosersBody.innerHTML = "";
       topLosersStocks.forEach((stock) => {
         const stocks = `
     <div class="stocks">
                 <h2>${stock.ticker}</h2>
                 <div class="stock-details">
                     <h3>${stock.price}</h3>
-                    <p style="color: red;">${stock.change_percentage}</p>
+                    <p style="color: red;">${toFixNumber(
+                      stock.change_percentage
+                    )}</p>
                 </div>
             </div>
-
   `;
         topLosersBody.innerHTML += stocks;
         activeStocksBody.style.display = "none";
@@ -638,19 +514,41 @@ subHeaders.forEach((header, i) => {
     } else {
       alert("something Went Wrong");
     }
+    initilializeStockClick();
   });
 });
 
-const mostActiveStocks = document.querySelectorAll("#activeStocks .stocks");
-console.log(mostActiveStocks);
+function toFixNumber(value, digit = 2) {
+  if (value.trim() !== "") {
+    const num = Number(value.split("%")[0]);
+    const requiredFormat = num.toFixed(digit) + "%";
+    return requiredFormat;
+  }
+}
 
-mostActiveStocks.forEach((stock) => {
-  stock.addEventListener("click", () => {
-    const symbol = stock.querySelector("h2").textContent;
-    console.log(symbol);
-    showGraph(symbol);
-  });
+document.addEventListener("DOMContentLoaded", () => {
+  initilializeStockClick();
+  subHeaders[0].click();
 });
+
+function initilializeStockClick() {
+  const allStocks = document.querySelectorAll(".stocks");
+  if (!allStocks.length > 0) return;
+
+  allStocks.forEach((stock) => {
+    stock.addEventListener("click", () => {
+      const symbol = stock.querySelector("h2").textContent;
+      showGraph(symbol);
+      dataVisibleDivArr.forEach((dataBtn) => {
+        dataBtn.setAttribute("data-id", symbol);
+      });
+    });
+  });
+}
+const companyName =document.querySelector(".companyName")
+const stockSymbol = document.querySelector(".stockSymbol")
+const currentPrice = document.querySelector(".currentPrice")
+const changedPercentage = document.querySelector(".changedPercentage")
 
 async function showGraph(symbol) {
   console.log(symbol);
@@ -677,7 +575,7 @@ async function showGraph(symbol) {
     }
     console.log(filterData);
 
-    let volumeData = [].reverse();
+    let volumeData = [];
 
     for (const date in filterData) {
       volumeData.push(filterData[date]["5. volume"]);
@@ -688,18 +586,58 @@ async function showGraph(symbol) {
     console.log(eachMonthVolumeData);
 
     graphData(eachMonthVolumeData);
+    // companyName.textContent=
+  }
+  else if (data["Information"]) {
+    console.log( data["Information"]);
   }
 }
 
 let chartInstance;
 
-function graphData(volume) {
+function graphDataForDailyReport(volume,timeSeries){
   const ctx = document.querySelector(".chart").getContext("2d");
 
   if (chartInstance) {
     chartInstance.destroy();
   }
 
+  chartInstance = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: timeSeries,
+      datasets: [
+        {
+          label: "Todays Report",
+          data: volume,
+          lineTension: 0.5,
+          backgroundColor: "lightblue",
+          borderCapStyle: "round",
+          borderJoinStyle: "round",
+          pointBackgroundColor:"blue",
+          pointHoverBorderWidth: 5,
+          pointHoverBorderColor: "blue",
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+}
+
+const loader = document.querySelector(".loader")
+function graphData(volume) {
+  const ctx = document.querySelector(".chart").getContext("2d");
+
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+if(volume){
   chartInstance = new Chart(ctx, {
     type: "bar",
     data: {
@@ -739,6 +677,10 @@ function graphData(volume) {
       },
     },
   });
+}
+else{
+  alert("data not found")
+}
 }
 
 /* subHeaders.forEach((header, i) => {
@@ -890,23 +832,113 @@ function graphData(volume) {
 
   });
 } */
-const dataVisible = document.querySelectorAll(".dataVisible");
-console.log(dataVisible);
 
-dataVisible.forEach((box, i) => {
+async function dailyReport(id) {
+  if (!id) return;
+
+
+  const apikey = "CTHM6KRGP3QSVY85";
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${id}&interval=5min&apikey=${apikey}`;
+  const data = await fetch(url)
+    .then((res) => res.json())
+    .then((dailyData) => {
+      return dailyData;
+    });
+
+  console.log(data);
+  // console.log(data["Monthly Time Series"]);
+
+  const timeSeriesDaily =data["Time Series (5min)"]
+  console.log(timeSeriesDaily);
+
+
+  // if (data["Time Series (Daily)"]) {
+  //   const filterData = [];
+  //   const dailyData = data["Time Series (5min)"];
+
+  const timeSeries =[]
+  const volumeData=[]
+
+    for (const date in timeSeriesDaily) {
+      if (date){
+      timeSeries.push(date.slice(11))  
+      }
+     volumeData.push(timeSeriesDaily[date]["5. volume"])
+
+      // if (date.startsWith("2025-01-24")) {
+      //   filterData[date] = dailyData[date];
+      // }
+    }
+    console.log(timeSeries);
+    console.log(volumeData);
+    
+    // console.log(filterData);
+
+    
+
+    // for (const date in filterData) {
+    //   volumeData.push(filterData[date]["5. volume"]);
+    // }
+    // console.log(volumeData);
+
+    // const eachMonthVolumeData = volumeData.reverse();
+    // console.log(eachMonthVolumeData);
+
+    graphDataForDailyReport(volumeData,timeSeries);
+  // } else if (data["Information"]) {
+  //   alert("Something went wrong");
+  // }
+}
+
+function weeklyReport(id) {
+  if (!id) return;
+
+  console.log("weekly report");
+}
+function monthlyReport(id) {
+  if (!id) return;
+
+  console.log("monthly report");
+}
+
+dataVisibleDivArr.forEach((box, i) => {
   box.addEventListener("click", () => {
-    console.log("clicked", i);
+    const id = box.getAttribute("data-id");
 
-    if ((i = 0)) {
-      dailyReport();
-    } else if ((i = 1)) {
-      weeklyReport();
-    } else if ((i = 2)) {
-      monthlyReport();
-    } else if ((i = 3)) {
-      yearlyReport();
-    } else {
-      alert("something went wrong");
+    if (!id) return;
+
+    switch (i) {
+      case 0:
+        dailyReport(id);
+        break;
+      case 1:
+        weeklyReport(id);
+        break;
+      case 2:
+        monthlyReport(id);
+        break;
+      case 3:
+        showGraph(id);
+        break;
+      default:
+        alert("something went wrong");
     }
   });
 });
+
+// function formatDate() {
+//   const now = new Date();
+  
+
+//   const day = String(now.getDate()).padStart(2, "0");
+//   const month = now.getMonth() + 1;
+//   const padMonth=String(month).padStart(2,"0")
+//   const year = String(now.getFullYear());
+
+//   const formattedDate = `${year}-${padMonth}-${day}`;
+//   console.log(formattedDate);
+  
+//   return formattedDate;
+// }
+// console.log(formatDate()) 
+
