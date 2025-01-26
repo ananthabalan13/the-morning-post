@@ -7,6 +7,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+a {
+  text-decoration: none;
+}
+
 body {
   position: relative;
   font-family: "Poppins", serif;
@@ -20,17 +24,17 @@ body {
   padding: 40px 60px;
   box-shadow: var(--primary-Boxshadow);
 }
-.header .rightNav{
+.header .rightNav {
   display: flex;
   align-items: center;
   justify-content: center;
   column-gap: 50px;
 }
-.header .rightNav  a {
+.header .rightNav a {
   color: #333;
   text-decoration: none;
   font-size: 20px;
-  transition:ease-in-out 0.2s;
+  transition: ease-in-out 0.2s;
   cursor: pointer;
 }
 
@@ -41,58 +45,58 @@ body {
   padding: 50px;
   color: aliceblue;
 }
-.footer .footerContainer{
+.footer .footerContainer {
   width: 100%;
 }
-.footer .footerContainer .footertHeader{
+.footer .footerContainer .footertHeader {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px ;
+  margin-bottom: 20px;
   width: calc(100% - 50px);
 }
-.footer .footerContainer .footerContent{
+.footer .footerContainer .footerContent {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width:calc(100% - 60px);
+  width: calc(100% - 60px);
 }
-.footerContent .address{
+.footerContent .address {
   display: flex;
   flex-direction: column;
   column-gap: 10px;
   width: 70%;
-  row-gap:10px;
+  row-gap: 10px;
 }
-.footerContent .address p{
+.footerContent .address p {
   margin-left: 10px;
 }
 .footerContent .address b,
-.footerContent .address p{
+.footerContent .address p {
   display: inline-block;
 }
-.footerContent .usefulLinks{
+.footerContent .usefulLinks {
   display: flex;
   flex-direction: column;
   row-gap: 10px;
 }
-.footerContent .usefulLinks a{
+.footerContent .usefulLinks a {
   text-decoration: none;
   color: rgba(240, 248, 255, 0.619);
   text-align: center;
   font-size: 14px;
-  transition:ease-in-out 0.3s ;
+  transition: ease-in-out 0.3s;
 }
-.footerContent h3{
+.footerContent h3 {
   width: max-content;
   border-bottom: 1px solid aliceblue;
 }
-.footerContent .usefulLinks a:hover{
+.footerContent .usefulLinks a:hover {
   color: aliceblue;
 }
-.header .rightNav a:hover{
-  color:black;
+.header .rightNav a:hover {
+  color: black;
 }
-.header .rightNav .active{
+.header .rightNav .active {
   font-weight: 600;
   color: black;
 }
