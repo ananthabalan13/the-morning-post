@@ -434,6 +434,9 @@ const subHeaders = rightHeading.querySelectorAll("h3");
 const dataVisibleDivArr = document.querySelectorAll(
   ".dataVisibleDiv .dataVisible"
 );
+const loader = document.querySelector(".loader")
+const pageNotFoundDiv =document.querySelector(".pageNotFound")
+const chart = document.querySelector(".chart")
 
 subHeaders.forEach((menu) => {
   menu.addEventListener("click", () => {
@@ -488,8 +491,6 @@ subHeaders.forEach((header, i) => {
         topGainersBody.style.display = "flex";
         topLosersBody.style.display = "none";
       });
-      const topGainerStocks = document.querySelectorAll("#topGainers .stocks");
-      console.log(topGainerStocks);
     } else if (i == 2) {
       const topLosersStocks = topGainersLosersData["top_losers"];
       // console.log(topLosersStocks);
@@ -531,26 +532,36 @@ document.addEventListener("DOMContentLoaded", () => {
   subHeaders[0].click();
 });
 
-function initilializeStockClick() {
-  const allStocks = document.querySelectorAll(".stocks");
-  if (!allStocks.length > 0) return;
-
-  allStocks.forEach((stock) => {
-    stock.addEventListener("click", () => {
-      const symbol = stock.querySelector("h2").textContent;
-      showGraph(symbol);
-      dataVisibleDivArr.forEach((dataBtn) => {
-        dataBtn.setAttribute("data-id", symbol);
-      });
-    });
-  });
-}
 const companyName =document.querySelector(".companyName")
 const stockSymbol = document.querySelector(".stockSymbol")
 const currentPrice = document.querySelector(".currentPrice")
 const changedPercentage = document.querySelector(".changedPercentage")
 
+function initilializeStockClick() {
+  const allStocks = document.querySelectorAll(".stocks");  
+  if (!allStocks.length > 0) return;
+
+  allStocks.forEach((stock) => {
+    stock.addEventListener("click", () => {
+      loader.style.display="flex"
+      const symbol = stock.querySelector("h2").textContent;
+      dataVisibleDivArr.forEach((dataBtn) => {
+        dataBtn.setAttribute("data-id", symbol);
+        stockSymbol.textContent=symbol
+        const percentage =`(${stock.querySelector("p").textContent})`
+        changedPercentage.textContent=percentage
+        currentPrice.textContent=(`$${stock.querySelector("h3").textContent}`)
+        dataVisibleDivArr.forEach(menu =>{
+          menu.classList.remove("active")
+        })
+      });
+      showGraph(symbol);
+    });
+  });
+}
+
 async function showGraph(symbol) {
+  dataVisibleDivArr[2].classList.add("active")
   console.log(symbol);
 
   const apikey = "CTHM6KRGP3QSVY85";
@@ -586,10 +597,12 @@ async function showGraph(symbol) {
     console.log(eachMonthVolumeData);
 
     graphData(eachMonthVolumeData);
-    // companyName.textContent=
   }
-  else if (data["Information"]) {
-    console.log( data["Information"]);
+
+  else{
+    pageNotFoundDiv.style.display="flex"
+    chart.style.display="none"
+    loader.style.display="none"
   }
 }
 
@@ -630,7 +643,78 @@ function graphDataForDailyReport(volume,timeSeries){
   });
 }
 
-const loader = document.querySelector(".loader")
+function graphDataForWeeklyReport(volume,label){
+  const ctx = document.querySelector(".chart").getContext("2d");
+
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  chartInstance = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: label,
+      datasets: [
+        {
+          label: "Weekly Report 2025",
+          data: volume,
+          lineTension: 0.5,
+          backgroundColor: "lightblue",
+          borderCapStyle: "round",
+          borderJoinStyle: "round",
+          pointBackgroundColor:"blue",
+          pointHoverBorderWidth: 5,
+          pointHoverBorderColor: "blue",
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+}
+
+
+function graphDataForYearlyReport(volume){
+  const ctx = document.querySelector(".chart").getContext("2d");
+
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  chartInstance = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ['2020','2021','2022','2023','2024'],
+      datasets: [
+        {
+          label: "Monthly Data 2024",
+          data: volume,
+          lineTension: 0.3,
+          backgroundColor: "blue",
+          borderColor: "aliceblue",
+          borderCapStyle: "round",
+          borderJoinStyle: "round",
+          pointHoverBorderWidth: 5,
+          pointHoverBorderColor: "blue",
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+}
+
+
 function graphData(volume) {
   const ctx = document.querySelector(".chart").getContext("2d");
 
@@ -682,161 +766,8 @@ else{
   alert("data not found")
 }
 }
-
-/* subHeaders.forEach((header, i) => {
-  header.addEventListener("click", () => {
-    console.log(header, i);
-
-    if (i == 0) {
-      while (activeStocksBody.firstChild) {
-        activeStocksBody.removeChild(activeStocksBody.firstChild);
-      }
-      mostActivelyStocks();
-      const activeStocksEle = document.querySelectorAll("#activeStocks tr");
-      console.log(activeStocksEle);
-
-      activeStocksEle.forEach((ele) => {
-        ele.addEventListener("click", () => {
-          const clickedElement = ele;
-          const ticker = clickedElement.querySelector(".stockName").textContent;
-          showGraph(ticker);
-        });
-      });
-    } 
-    else if (i == 1) {
-      while (topGainersBody.firstChild) {
-        topGainersBody.removeChild(topGainersBody.firstChild);
-      }
-      topGainersStocks();
-
-      const gainerStocksEle = document.querySelectorAll("#topGainers tr");
-      console.log(gainerStocksEle);
-
-      gainerStocksEle.forEach((ele) => {
-        ele.addEventListener("click", () => {
-          const clickedElement = ele;
-          const ticker = clickedElement.querySelector(".stockName").textContent;
-          showGraph(ticker);
-        });
-      });
-    }
-     else if (i == 2) {
-      while (topLosersBody.firstChild) {
-        topLosersBody.removeChild(topLosersBody.firstChild);
-      }
-      topLoserStocks();
-
-      const loserStocksEle = document.querySelectorAll("#topLosers tr");
-      console.log(loserStocksEle);
-
-      loserStocksEle.forEach((ele) => {
-        ele.addEventListener("click", () => {
-          const clickedElement = ele;
-          const ticker = clickedElement.querySelector(".stockName").textContent;
-          showGraph(ticker);
-        });
-      });
-    } else {
-      alert("something Went Wrong");
-    }
-  });
-}); */
-
-// mostactively stocks
-
-/* async function mostActivelyStocks() {
-  const apikey = "CTHM6KRGP3QSVY85";
-  const url = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${apikey}`;
-  fetch(url);
-  const activeStocks = await fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      return data["most_actively_traded"];
-    });
-  console.log(activeStocks);
-
-  activeStocks.forEach((stocks) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-                <td class="stockName">${stocks.ticker}</td>
-                <td class="stockPrice">${stocks.price}</td>
-                <td class="changeAmount"  style="font-weight: 800">${stocks.change_amount}</td>
-                <td class="volume">${stocks.volume}</td>
-                <td class="dayLow" style="color:#FFB900">${stocks.change_percentage}</td>
-                `;
-    console.log(tr);
-    topLosersBody.style.display = "none";
-    topGainersBody.style.display = "none";
-    activeStocksBody.style.display = "flex";
-    activeStocksBody.appendChild(tr) 
-  });
-} */
-
-// mostActivelyStocks()
-
-// top gainers stocks
-
-/* async function topGainersStocks() {
-  const apikey = "CTHM6KRGP3QSVY85";
-  const url = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${apikey}`;
-  fetch(url);
-  const topGainersStocks = await fetch(url)
-    .then((res) => res.json())
-    .then((data) => {return data["top_gainers"]});
-  console.log(topGainersStocks);
-
-  topGainersStocks.forEach((stocks) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-                <td class="stockName">${stocks.ticker}</td>
-                <td class="stockPrice">${stocks.price}</td>
-                <td class="changeAmount"  style="font-weight: 800">${stocks.change_amount}</td>
-                <td class="volume">${stocks.volume}</td>
-                <td class="dayLow" style="color: green;">${stocks.change_percentage}</td>
-                `;
-    console.log(tr);
-    topGainersBody.appendChild(tr);
-    topGainersBody.style.display = "flex";                  
-    topLosersBody.style.display = "none";
-    activeStocksBody.style.display = "none";
-  });
-} */
-
-// losers stocks
-
-/* async function topLoserStocks() {
-  const apikey = "CTHM6KRGP3QSVY85";
-  const url = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${apikey}`;
-  fetch(url);
-  const loserStocks = await fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      return data["top_losers"];
-    });
-  console.log(loserStocks);
-
-  loserStocks.forEach((stocks) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-                <td class="stockName">${stocks.ticker}</td>
-                <td class="stockPrice">${stocks.price}</td>
-                <td class="changeAmount"  style="font-weight: 800">${stocks.change_amount}</td>
-                <td class="volume">${stocks.volume}</td>
-                <td class="dayLow" style="color: red;">${stocks.change_percentage}</td>
-                `;
-    console.log(tr);
-    topLosersBody.style.display = "flex";
-    topGainersBody.style.display = "none";
-    activeStocksBody.style.display = "none";
-    topLosersBody.appendChild(tr);
-
-  });
-} */
-
 async function dailyReport(id) {
   if (!id) return;
-
-
   const apikey = "CTHM6KRGP3QSVY85";
   const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${id}&interval=5min&apikey=${apikey}`;
   const data = await fetch(url)
@@ -846,59 +777,133 @@ async function dailyReport(id) {
     });
 
   console.log(data);
-  // console.log(data["Monthly Time Series"]);
-
   const timeSeriesDaily =data["Time Series (5min)"]
   console.log(timeSeriesDaily);
-
-
-  // if (data["Time Series (Daily)"]) {
-  //   const filterData = [];
-  //   const dailyData = data["Time Series (5min)"];
 
   const timeSeries =[]
   const volumeData=[]
 
+  if (timeSeriesDaily) {
+    
     for (const date in timeSeriesDaily) {
       if (date){
       timeSeries.push(date.slice(11))  
       }
      volumeData.push(timeSeriesDaily[date]["5. volume"])
-
-      // if (date.startsWith("2025-01-24")) {
-      //   filterData[date] = dailyData[date];
-      // }
     }
     console.log(timeSeries);
     console.log(volumeData);
-    
-    // console.log(filterData);
-
-    
-
-    // for (const date in filterData) {
-    //   volumeData.push(filterData[date]["5. volume"]);
-    // }
-    // console.log(volumeData);
-
-    // const eachMonthVolumeData = volumeData.reverse();
-    // console.log(eachMonthVolumeData);
 
     graphDataForDailyReport(volumeData,timeSeries);
-  // } else if (data["Information"]) {
-  //   alert("Something went wrong");
-  // }
+  }
+  else{
+    pageNotFoundDiv.style.display="flex"
+    chart.style.display="none"
+    loader.style.display="none"
+}
 }
 
-function weeklyReport(id) {
+async function weeklyReport(id) {
   if (!id) return;
+  console.log(id);
+  const apikey = "CTHM6KRGP3QSVY85";
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${id}&interval=5min&apikey=${apikey}`;
+  const data = await fetch(url)
+    .then((res) => res.json())
+    .then((weeklyData) => {
+      return weeklyData;
+    });
 
-  console.log("weekly report");
+  console.log(data);
+  const weeklyData =data["Weekly Time Series"]
+  console.log(weeklyData);
+
+  if (weeklyData) {
+    const weeklyTimeSeries =[]
+    const volumeData=[]
+
+    for (const date in weeklyData) {
+      if (date.startsWith("2025")) {
+        weeklyTimeSeries.push(date)  
+        volumeData.push(weeklyData[date]["5. volume"])
+      }
+    }
+    console.log(weeklyTimeSeries);
+    console.log(volumeData);
+    graphDataForWeeklyReport(volumeData,weeklyTimeSeries);
+  }
+  else{
+    pageNotFoundDiv.style.display="flex"
+    chart.style.display="none"
+    loader.style.display="none"
+  }
 }
+
 function monthlyReport(id) {
   if (!id) return;
+  showGraph(id)
+}
 
-  console.log("monthly report");
+async function yearlyReport(symbol) {
+
+  const apikey = "CTHM6KRGP3QSVY85";
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${apikey}`;
+  const data = await fetch(url)
+    .then((res) => res.json())
+    .then((monthlyData) => {
+      return monthlyData;
+    });
+
+  // console.log(data);
+
+  if (data["Monthly Time Series"]) {
+    const filterData2020 = [];
+    const filterData2021 = [];
+    const filterData2022 = [];
+    const filterData2023 = [];
+    const filterData2024 = [];
+
+    const monthlyData = data["Monthly Time Series"];
+
+    for (const date in monthlyData) {
+      if (date.startsWith("2024")) {
+        filterData2024[date] = monthlyData[date];
+      }
+      else if (date.startsWith("2023")) {
+        filterData2023[date] = monthlyData[date];
+      }
+      else if (date.startsWith("2022")) {
+        filterData2022[date] = monthlyData[date];
+      }
+      else if (date.startsWith("2021")) {
+        filterData2021[date] = monthlyData[date];
+      }
+      else if (date.startsWith("2020")) {
+        filterData2020[date] = monthlyData[date];
+      }
+    }
+   
+  const volumesData2020 =getVolumes(filterData2020,"2020")
+  const volumesData2021 =getVolumes(filterData2021,"2021") 
+  const volumesData2022 =getVolumes(filterData2022,"2022")    
+  const volumesData2023 =getVolumes(filterData2023,"2023")
+  const volumesData2024 =getVolumes(filterData2024,"2024")
+    
+  const totalVolume2020 = volumesData2020.reduce((sum, volume) => sum + parseInt(volume, 10), 0);
+  const totalVolume2021 = volumesData2021.reduce((sum, volume) => sum + parseInt(volume, 10), 0);
+  const totalVolume2022 = volumesData2022.reduce((sum, volume) => sum + parseInt(volume, 10), 0);
+  const totalVolume2023 = volumesData2023.reduce((sum, volume) => sum + parseInt(volume, 10), 0);
+  const totalVolume2024 = volumesData2024.reduce((sum, volume) => sum + parseInt(volume, 10), 0);
+
+    const yearlyVolume=[totalVolume2020,totalVolume2021,totalVolume2022,totalVolume2023,totalVolume2024]
+
+    graphDataForYearlyReport(yearlyVolume)
+}
+else{
+  pageNotFoundDiv.style.display="flex"
+  chart.style.display="none"
+  loader.style.display="none"
+}
 }
 
 dataVisibleDivArr.forEach((box, i) => {
@@ -918,27 +923,27 @@ dataVisibleDivArr.forEach((box, i) => {
         monthlyReport(id);
         break;
       case 3:
-        showGraph(id);
+        yearlyReport(id);
         break;
       default:
         alert("something went wrong");
     }
   });
 });
+const dataVisibleDivParent =document.querySelector(".dataVisibleDiv")
 
-// function formatDate() {
-//   const now = new Date();
+dataVisibleDivArr.forEach((menu) => {
+  menu.addEventListener("click", () => {
+    dataVisibleDivParent.querySelector(".active").classList.remove("active");
+    menu.classList.add("active");
+  });
+});
+
+function getVolumes(data,year) {
+
+  const volumes = Object.entries(data)
+    .filter(([date]) => date.startsWith(year))
+    .map(([_, details]) => details["5. volume"]);
   
-
-//   const day = String(now.getDate()).padStart(2, "0");
-//   const month = now.getMonth() + 1;
-//   const padMonth=String(month).padStart(2,"0")
-//   const year = String(now.getFullYear());
-
-//   const formattedDate = `${year}-${padMonth}-${day}`;
-//   console.log(formattedDate);
-  
-//   return formattedDate;
-// }
-// console.log(formatDate()) 
-
+  return volumes;
+}
