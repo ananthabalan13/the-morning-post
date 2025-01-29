@@ -429,7 +429,7 @@ const topGainersLosersData = {
   ],
 };
 
-const apiKey = "OT31MS13T9VD5GB6"
+const apiKey = "SPPYSWA14BVBW91A"
 
 const rightHeading = document.querySelector(".rightHeading");
 const subHeaders = rightHeading.querySelectorAll("h4");
