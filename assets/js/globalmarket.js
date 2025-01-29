@@ -581,7 +581,6 @@ function searchSymbols(){
     symbolsList.appendChild(li)
   });
   const stocksList = document.querySelectorAll("li")
-  console.log(stocksList);
   stocksList.forEach(li => {
     li.addEventListener("click",()=>{
       const symbol = li.textContent
