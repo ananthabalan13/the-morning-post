@@ -429,8 +429,10 @@ const topGainersLosersData = {
   ],
 };
 
+const apiKey = "OT31MS13T9VD5GB6"
+
 const rightHeading = document.querySelector(".rightHeading");
-const subHeaders = rightHeading.querySelectorAll("h3");
+const subHeaders = rightHeading.querySelectorAll("h4");
 const dataVisibleDivArr = document.querySelectorAll(
   ".dataVisibleDiv .dataVisible"
 );
@@ -457,10 +459,10 @@ subHeaders.forEach((header, i) => {
       activeStocksBody.innerHTML = "";
       activeStocks.forEach((stock) => {
         const stocks = `
-          <div class="stocks">
-                      <h2>${stock.ticker}</h2>
+          <div class="stocks" data-ticker="${stock.ticker}">
+                      <h3>${stock.ticker}</h3>
                       <div class="stock-details">
-                          <h3>${stock.price}</h3>
+                          <h3 class="currentPrice">${stock.price}</h3>
                           <p>${toFixNumber(stock.change_percentage)}</p>
                       </div>
                   </div>
@@ -476,10 +478,10 @@ subHeaders.forEach((header, i) => {
       topGainersBody.innerHTML = "";
       topGainersStocks.forEach((stock) => {
         const stocks = `
-    <div class="stocks">
-                <h2>${stock.ticker}</h2>
+    <div class="stocks" data-ticker="${stock.ticker}">
+                <h3>${stock.ticker}</h3>
                 <div class="stock-details">
-                    <h3>${stock.price}</h3>
+                    <h3 class="currentPrice">${stock.price}</h3>
                     <p style="color: green;">${toFixNumber(
                       stock.change_percentage
                     )}</p>
@@ -497,10 +499,10 @@ subHeaders.forEach((header, i) => {
       topLosersBody.innerHTML = "";
       topLosersStocks.forEach((stock) => {
         const stocks = `
-    <div class="stocks">
-                <h2>${stock.ticker}</h2>
+    <div class="stocks" data-ticker="${stock.ticker}">
+                <h3>${stock.ticker}</h3>
                 <div class="stock-details">
-                    <h3>${stock.price}</h3>
+                    <h3 class="currentPrice">${stock.price}</h3>
                     <p style="color: red;">${toFixNumber(
                       stock.change_percentage
                     )}</p>
@@ -527,30 +529,26 @@ function toFixNumber(value, digit = 2) {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  initilializeStockClick();
-  subHeaders[0].click();
-});
-
 const companyName =document.querySelector(".companyName")
 const stockSymbol = document.querySelector(".stockSymbol")
 const currentPrice = document.querySelector(".currentPrice")
 const changedPercentage = document.querySelector(".changedPercentage")
 
 function initilializeStockClick() {
-  const allStocks = document.querySelectorAll(".stocks");  
+  const allStocks = document.querySelectorAll(".stocks");
+  
   if (!allStocks.length > 0) return;
 
-  allStocks.forEach((stock) => {
+  allStocks.forEach((stock,i) => {
     stock.addEventListener("click", () => {
       loader.style.display="flex"
-      const symbol = stock.querySelector("h2").textContent;
+      const symbol = stock.querySelector("h3").textContent;
       dataVisibleDivArr.forEach((dataBtn) => {
         dataBtn.setAttribute("data-id", symbol);
         stockSymbol.textContent=symbol
         const percentage =`(${stock.querySelector("p").textContent})`
         changedPercentage.textContent=percentage
-        currentPrice.textContent=(`$${stock.querySelector("h3").textContent}`)
+        currentPrice.textContent=(`$${stock.querySelector(".currentPrice").textContent}`)
         dataVisibleDivArr.forEach(menu =>{
           menu.classList.remove("active")
         })
@@ -560,20 +558,59 @@ function initilializeStockClick() {
   });
 }
 
+const allSymbols = [
+  ...topGainersLosersData.top_gainers.map((item) => item.ticker),
+  ...topGainersLosersData.top_losers.map((item) => item.ticker),
+  ...topGainersLosersData.most_actively_traded.map((item) => item.ticker),
+];
+
+const searchInput = document.getElementById("input")
+const symbolsList = document.querySelector(".symbolsList")
+
+function searchSymbols(){
+  symbolsList.style.display="block"
+  const inputVal =searchInput.value.toUpperCase()
+
+  const upperCaseSymbols = allSymbols.filter(symbol => symbol.toUpperCase().includes(inputVal)
+)
+  symbolsList.innerHTML="" 
+
+  upperCaseSymbols.forEach(ticker => {
+    const li = document.createElement('li');
+    li.textContent = ticker;
+    symbolsList.appendChild(li)
+  });
+  const stocksList = document.querySelectorAll("li")
+  console.log(stocksList);
+  stocksList.forEach(li => {
+    li.addEventListener("click",()=>{
+      const symbol = li.textContent
+      symbolsList.style.display="none"
+      showGraph(symbol)
+      const searchedElement = document.querySelector(`[data-ticker="${symbol}"]`)
+      console.log(searchedElement);
+      searchedElement.click()
+    })
+  }) 
+}
+document.addEventListener('click', (event) => {
+  if (!searchInput.contains(event.target) && !symbolsList.contains(event.target)) {
+    symbolsList.style.display = 'none';
+    searchInput.value=""
+  }
+});
+
 async function showGraph(symbol) {
   dataVisibleDivArr[2].classList.add("active")
   console.log(symbol);
 
-  const apikey = "CTHM6KRGP3QSVY85";
-  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${apikey}`;
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${apiKey}`;
   const data = await fetch(url)
     .then((res) => res.json())
     .then((monthlyData) => {
       return monthlyData;
     });
 
-  console.log(data);
-  // console.log(data["Monthly Time Series"]);
 
   if (data["Monthly Time Series"]) {
     const filterData = [];
@@ -584,25 +621,22 @@ async function showGraph(symbol) {
         filterData[date] = dailyData[date];
       }
     }
-    console.log(filterData);
-
     let volumeData = [];
 
     for (const date in filterData) {
       volumeData.push(filterData[date]["5. volume"]);
     }
-    console.log(volumeData);
-
+    loader.style.display="none"
+    
     const eachMonthVolumeData = volumeData.reverse();
-    console.log(eachMonthVolumeData);
 
     graphData(eachMonthVolumeData);
   }
 
   else{
     pageNotFoundDiv.style.display="flex"
-    chart.style.display="none"
     loader.style.display="none"
+    chart.style.display="none"
   }
 }
 
@@ -692,7 +726,7 @@ function graphDataForYearlyReport(volume){
       labels: ['2020','2021','2022','2023','2024'],
       datasets: [
         {
-          label: "Monthly Data 2024",
+          label: "Yearly Report",
           data: volume,
           lineTension: 0.3,
           backgroundColor: "blue",
@@ -767,18 +801,17 @@ else{
 }
 }
 async function dailyReport(id) {
+  console.log(id);
+  loader.style.display="flex"
   if (!id) return;
-  const apikey = "CTHM6KRGP3QSVY85";
-  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${id}&interval=5min&apikey=${apikey}`;
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${id}&interval=5min&apikey=${apiKey}`;
   const data = await fetch(url)
     .then((res) => res.json())
     .then((dailyData) => {
       return dailyData;
     });
 
-  console.log(data);
   const timeSeriesDaily =data["Time Series (5min)"]
-  console.log(timeSeriesDaily);
 
   const timeSeries =[]
   const volumeData=[]
@@ -791,32 +824,31 @@ async function dailyReport(id) {
       }
      volumeData.push(timeSeriesDaily[date]["5. volume"])
     }
-    console.log(timeSeries);
-    console.log(volumeData);
-
     graphDataForDailyReport(volumeData,timeSeries);
+    loader.style.display="none"
   }
   else{
     pageNotFoundDiv.style.display="flex"
     chart.style.display="none"
     loader.style.display="none"
 }
+console.log(id,"Daily data");
 }
 
 async function weeklyReport(id) {
-  if (!id) return;
   console.log(id);
-  const apikey = "CTHM6KRGP3QSVY85";
-  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${id}&interval=5min&apikey=${apikey}`;
+
+  loader.style.display="flex"
+
+  if (!id) return;
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${id}&interval=5min&apikey=${apiKey}`;
   const data = await fetch(url)
     .then((res) => res.json())
     .then((weeklyData) => {
       return weeklyData;
     });
 
-  console.log(data);
   const weeklyData =data["Weekly Time Series"]
-  console.log(weeklyData);
 
   if (weeklyData) {
     const weeklyTimeSeries =[]
@@ -828,33 +860,34 @@ async function weeklyReport(id) {
         volumeData.push(weeklyData[date]["5. volume"])
       }
     }
-    console.log(weeklyTimeSeries);
-    console.log(volumeData);
     graphDataForWeeklyReport(volumeData,weeklyTimeSeries);
+    loader.style.display="none"
+    
   }
   else{
     pageNotFoundDiv.style.display="flex"
     chart.style.display="none"
     loader.style.display="none"
   }
+  console.log(id,"weekly data");
 }
 
 function monthlyReport(id) {
+  console.log(id);
   if (!id) return;
   showGraph(id)
+  console.log(id,"monthly data");
 }
 
-async function yearlyReport(symbol) {
-
-  const apikey = "CTHM6KRGP3QSVY85";
-  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${apikey}`;
+async function yearlyReport(id) {
+  console.log(id);
+  loader.style.display="flex"
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${id}&apikey=${apiKey}`;
   const data = await fetch(url)
     .then((res) => res.json())
     .then((monthlyData) => {
       return monthlyData;
     });
-
-  // console.log(data);
 
   if (data["Monthly Time Series"]) {
     const filterData2020 = [];
@@ -898,12 +931,14 @@ async function yearlyReport(symbol) {
     const yearlyVolume=[totalVolume2020,totalVolume2021,totalVolume2022,totalVolume2023,totalVolume2024]
 
     graphDataForYearlyReport(yearlyVolume)
+    loader.style.display="none"
 }
 else{
   pageNotFoundDiv.style.display="flex"
   chart.style.display="none"
   loader.style.display="none"
 }
+console.log(id,"yearly data");
 }
 
 dataVisibleDivArr.forEach((box, i) => {
@@ -947,3 +982,14 @@ function getVolumes(data,year) {
   
   return volumes;
 }
+document.addEventListener("DOMContentLoaded", () => {
+  initilializeStockClick();
+  subHeaders[1].click();
+  subHeaders[2].click();
+  subHeaders[0].click();
+});
+
+document.addEventListener("DOMContentLoaded",()=>{
+  const firstChild = document.querySelector(".stocks") 
+  firstChild.click()
+})

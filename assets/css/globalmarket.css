@@ -23,8 +23,6 @@
 .bodySection .mainContentWrapper {
   width: 65%;
   height: 100%;
-  /* background-color: white; */
-  /* box-shadow: var(--primary-Boxshadow); */
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -44,15 +42,47 @@
   border: none;
   border-radius: 7px;
 }
+.headerBox .inputBox{
+  width: 50%;
+  position: relative;
+}
+.headerBox .inputBox i{
+  position: absolute;
+  top: 50%;
+  right: 12%;
+  transform: translateY(-50%);
+  color: #00000044;
+}
 .headerBox input {
-  width: 40%;
+  width: 90%;
   background-color: white;
   border: 1px solid #33333324;
   padding: 7px;
+  padding-left: 10px;
   border-radius: 7px;
   outline: none;
   align-items: center;
   font-size: 16px;
+  margin-bottom: 2px;
+}
+.headerBox .inputBox ul{
+  position: absolute;
+  width: 90%;
+  background-color: white;
+  max-height: 150px;
+  overflow-y:hidden;
+  overflow-y: scroll;
+  z-index: 1;
+  display: none;
+}
+.headerBox .inputBox ul li{
+  background-color: white;
+  border-radius: 7px;
+  padding: 5px;
+  list-style-type: none;
+}
+.headerBox .inputBox ul li:hover{
+  background-color: rgba(211, 211, 211, 0.626);
 }
 .chartDiv {
   width: calc(100% - 10px);
@@ -122,17 +152,6 @@
   cursor: pointer;
   font-size: 14px;
 }
-.similarCompanies {
-  background-color: white;
-  box-shadow: var(--primary-Boxshadow);
-  height: 25%;
-  display: none;
-}
-.similarCompanies > :first-child {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 .rightHeading {
   width: 100%;
   display: flex;
@@ -142,7 +161,7 @@
   color: #161616c4;
   text-align: center;
 }
-.rightHeading h3 {
+.rightHeading h4 {
   cursor: pointer;
 }
 
