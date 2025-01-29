@@ -17,8 +17,8 @@
         <h1>The Morning Post</h1>
       </div>
       <div class="rightNav">
-        <a target="_blank" href="index.html">News/Articles</a>
-        <a target="_blank" class="active" href="globalmarket.html"
+        <a href="index.html">News/Articles</a>
+        <a class="active" href="globalmarket.html"
           >Global Market</a
         >
         <a target="_blank" href="subscription.html">Subscription</a>
@@ -27,10 +27,18 @@
     <main class="bodySection">
       <div class="mainContentWrapper">
         <div class="headerBox">
-          <input type="text" placeholder="Search for Stocks">
+
+          <div class="inputBox">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="input" type="text" placeholder="Search for Stocks" onkeyup="searchSymbols()">
+            <ul class="symbolsList customScroll">
+            </ul>
+          </div>
+
           <div class="downloadSection">
             <a href="assets/docs/morning_post_doc.pdf" download="assets/docs/morning_post_doc.pdf" ><i class="fa-solid fa-download"></i> Download Report</a>
           </div>
+
         </div>
 
         <div class="chartDiv">
@@ -55,11 +63,11 @@
 
             <span class="loader"></span>
 
-          <canvas class="chart">
-          </canvas>
-          <div class="pageNotFound">
-            <img src="assets/images/pageNotFound.jpg" alt="">
-          </div>
+            <canvas class="chart">
+            </canvas>
+            <div class="pageNotFound">
+              <img src="assets/images/pageNotFound.jpg" alt="">
+            </div>
           
           </div>
          
@@ -69,9 +77,9 @@
       <div class="relatedPostContainer customScroll">
         <div class="headingText">
           <div class="rightHeading">
-            <h3 class="active">Most Active</h3>
-            <h3>Gainers</h3>
-            <h3>Losers</h3>
+            <h4 class="active">Most Active</h4>
+            <h4>Gainers</h4>
+            <h4>Losers</h4>
           </div>
         </div>
         <div class="tableBody customScroll" id="activeStocks">
@@ -107,7 +115,7 @@
               </div>
               <div class="usefulLinks">
                   <h3>Quick Links</h3>
-                  <a href="news.html">News/Articles</a>
+                  <a href="index.html">News/Articles</a>
                   <a href="globalmarket.html">Globalmarket</a>
                   <a href="subscription.html">Subscription</a>
               </div>
